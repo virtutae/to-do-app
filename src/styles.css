@@ -1,25 +1,25 @@
 body {
-    background-color: #08b8cd;
+  background-color: #08b8cd;
 }
 
 .title {
-    font-family:'Times New Roman', Times, serif;
-    font-size: 24px;
-    color: rgb(0, 0, 0);
-  }
+  font-family: "Times New Roman", Times, serif;
+  font-size: 24px;
+  color: rgb(0, 0, 0);
+}
 
 .add-button {
-    background-color: #00c445;
-    color: rgb(0, 0, 0);
-    border:hsl(from color h s l);
-    padding: 10px 20px;
-    cursor: pointer;
+  background-color: #00c445;
+  color: rgb(0, 0, 0);
+  border: hsl(from color h s l);
+  padding: 10px 20px;
+  cursor: pointer;
 }
 
 .add-button:hover {
-    background-color: hsl(200, 70%, 50%);
-  }
+  background-color: hsl(200, 70%, 50%);
+}
 
- .input-bar{
-    height: 35px;
- } 
+.input-bar {
+  height: 35px;
+}
