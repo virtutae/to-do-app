@@ -2,7 +2,6 @@ import AppHeader from "./components/AppHeader";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-
 function App(): JSX.Element {
   return (
     <>
@@ -19,13 +18,11 @@ interface ToDoItem {
   description: string;
 }
 
-
 type ToDoList = ToDoItem[];
 
 function InputBox(): JSX.Element {
   const [currentText, setCurrentText] = useState("");
   const [list, setList] = useState<ToDoList>([]);
-
 
   useEffect(() => {
     function getEntries() {
@@ -42,8 +39,6 @@ function InputBox(): JSX.Element {
     }
     getEntries();
   }, []);
-
-
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setCurrentText(event.target.value);
