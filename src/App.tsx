@@ -1,5 +1,6 @@
 import AppHeader from "./components/AppHeader";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 
 function App(): JSX.Element {
   return (
@@ -13,29 +14,44 @@ function App(): JSX.Element {
 export default App;
 
 interface ToDoItem {
-  id: number;
-  text: string;
+  todo_id: number;
+  description: string;
 }
 
 type ToDoList = ToDoItem[];
 
 function InputBox(): JSX.Element {
-  const [tempText, setTempText] = useState("");
-
+  const [currentText, setCurrentText] = useState("");
   const [list, setList] = useState<ToDoList>([]);
 
+  useEffect(() => {
+    function getEntries() {
+      axios
+        .get("https://todoapp-backend-2ubv.onrender.com/")
+        .then((response) => {
+          console.log("Data received:", response.data); // Add this line
+          setList(response.data);
+        })
+        .catch((error) => console.log(error))
+        .finally(() =>
+          console.log("this gets logged when .finally gets exceuted")
+        );
+    }
+    getEntries();
+  }, []);
+
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setTempText(event.target.value);
+    setCurrentText(event.target.value);
   };
 
   const handleClick = () => {
     const newListItem: ToDoItem = {
-      id: Math.floor(Math.random() * 100),
-      text: tempText,
+      todo_id: Math.floor(Math.random() * 1000),
+      description: currentText,
     };
     const newList: ToDoList = [...list, newListItem];
     setList(newList);
-    setTempText("");
+    setCurrentText("");
   };
 
   return (
@@ -45,7 +61,7 @@ function InputBox(): JSX.Element {
         className="input-bar"
         placeholder="Add the item here"
         onChange={handleChange}
-        value={tempText}
+        value={currentText}
       />
 
       <button type="button" className="add-button" onClick={handleClick}>
@@ -53,7 +69,7 @@ function InputBox(): JSX.Element {
       </button>
       <ul>
         {list.map((task: ToDoItem) => {
-          return <li key={task.id}>{task.text}</li>;
+          return <li key={task.todo_id}>{task.description}</li>;
         })}
       </ul>
     </>
