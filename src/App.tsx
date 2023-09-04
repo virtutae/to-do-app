@@ -21,7 +21,6 @@ type ToDoList = ToDoItem[];
 
 function InputBox(): JSX.Element {
   const [tempText, setTempText] = useState("");
-
   const [list, setList] = useState<ToDoList>([]);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -30,7 +29,7 @@ function InputBox(): JSX.Element {
 
   const handleClick = () => {
     const newListItem: ToDoItem = {
-      id: Math.floor(Math.random() * 100),
+      id: Math.floor(Math.random() * 1000),
       text: tempText,
     };
     const newList: ToDoList = [...list, newListItem];
