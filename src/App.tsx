@@ -1,6 +1,7 @@
 import AppHeader from "./components/AppHeader";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import ToDoItem from "./Interfaces";
 
 function App(): JSX.Element {
   return (
@@ -13,32 +14,49 @@ function App(): JSX.Element {
 
 export default App;
 
-interface ToDoItem {
-  todo_id: number;
-  description: string;
-}
-
 type ToDoList = ToDoItem[];
 
 function InputBox(): JSX.Element {
   const [currentText, setCurrentText] = useState("");
   const [list, setList] = useState<ToDoList>([]);
+  const [currentEntryToSend, setCurrentEntryToSend] = useState<ToDoItem>();
+  const [entriesFromApi, setEntriesFromApi] = useState<ToDoList[]>([]);
 
   useEffect(() => {
     function getEntries() {
       axios
         .get("https://todoapp-backend-2ubv.onrender.com/")
         .then((response) => {
-          console.log("Data received:", response.data); // Add this line
+          console.log("Data received:", response.data);
+          console.log("entriesFromApi are:", entriesFromApi);
           setList(response.data);
         })
         .catch((error) => console.log(error))
         .finally(() =>
-          console.log("this gets logged when .finally gets exceuted")
+          console.log("this gets logged when .finally gets executed")
         );
     }
     getEntries();
-  }, []);
+  }, [entriesFromApi]);
+
+  useEffect(() => {
+    function sendEntryToApi() {
+      axios
+        .post("https://todoapp-backend-2ubv.onrender.com/", currentEntryToSend)
+        .then((response) => console.log(response))
+        .catch((error) => console.log(error))
+        .finally(() => getUpdatedEntries());
+    }
+
+    sendEntryToApi();
+  }, [currentEntryToSend]);
+
+  function getUpdatedEntries() {
+    axios
+      .get("https://paste-bin-si-tl.onrender.com/")
+      .then((response) => setEntriesFromApi(response.data))
+      .catch((error) => console.log(error));
+  }
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setCurrentText(event.target.value);
@@ -49,6 +67,7 @@ function InputBox(): JSX.Element {
       todo_id: Math.floor(Math.random() * 1000),
       description: currentText,
     };
+    setCurrentEntryToSend(newListItem);
     const newList: ToDoList = [...list, newListItem];
     setList(newList);
     setCurrentText("");
@@ -75,5 +94,3 @@ function InputBox(): JSX.Element {
     </>
   );
 }
-
-//////////////////////////////////
