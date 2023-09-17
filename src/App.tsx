@@ -1,6 +1,7 @@
 import AppHeader from "./components/AppHeader";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import  ToDoItem  from "./Interfaces";
 
 function App(): JSX.Element {
   return (
@@ -13,10 +14,7 @@ function App(): JSX.Element {
 
 export default App;
 
-interface ToDoItem {
-  todo_id: number;
-  description: string;
-}
+
 
 type ToDoList = ToDoItem[];
 
@@ -36,7 +34,7 @@ function InputBox(): JSX.Element {
         })
         .catch((error) => console.log(error))
         .finally(() =>
-          console.log("this gets logged when .finally gets exceuted")
+          console.log("this gets logged when .finally gets executed")
         );
     }
     getEntries();
@@ -98,7 +96,3 @@ function InputBox(): JSX.Element {
   );
 }
 
-//////////////////////////////////
-/////////////////////////////////
-
-//////////////////////////////////
