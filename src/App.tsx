@@ -1,7 +1,7 @@
 import AppHeader from "./components/AppHeader";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import  ToDoItem  from "./Interfaces";
+import ToDoItem from "./Interfaces";
 
 function App(): JSX.Element {
   return (
@@ -13,8 +13,6 @@ function App(): JSX.Element {
 }
 
 export default App;
-
-
 
 type ToDoList = ToDoItem[];
 
@@ -29,7 +27,8 @@ function InputBox(): JSX.Element {
       axios
         .get("https://todoapp-backend-2ubv.onrender.com/")
         .then((response) => {
-          console.log("Data received:", response.data); // Add this line
+          console.log("Data received:", response.data);
+          console.log("entriesFromApi are:", entriesFromApi);
           setList(response.data);
         })
         .catch((error) => console.log(error))
@@ -38,7 +37,7 @@ function InputBox(): JSX.Element {
         );
     }
     getEntries();
-  }, []);
+  }, [entriesFromApi]);
 
   useEffect(() => {
     function sendEntryToApi() {
@@ -95,4 +94,3 @@ function InputBox(): JSX.Element {
     </>
   );
 }
-
