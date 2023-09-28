@@ -73,6 +73,23 @@ function InputBox(): JSX.Element {
     setCurrentText("");
   };
 
+  const handleDelete = (id: number) => {
+    console.log("this is the id from handle delete triggered on clcik", {id});
+    axios
+      .delete(`https://todoapp-backend-2ubv.onrender.com/${id}`)
+      .then((response) => {
+        if (response.status === 204) {
+          const updatedList = list.filter((item) => item.todo_id !== id);
+          setList(updatedList);
+        } else {
+          console.error("Failed to delete item.");
+        }
+      })
+      .catch((error) => {
+        console.error("Error deleting item:", error);
+      });
+  };
+
   return (
     <>
       <input
@@ -87,9 +104,12 @@ function InputBox(): JSX.Element {
         Add item
       </button>
       <ul>
-        {list.map((task: ToDoItem) => {
-          return <li key={task.todo_id}>{task.description}</li>;
-        })}
+        {list.map((task: ToDoItem) => (
+          <li key={task.todo_id}>
+            {task.description}
+            <button onClick={() => handleDelete(task.todo_id)}>Delete</button>
+          </li>
+        ))}
       </ul>
     </>
   );
