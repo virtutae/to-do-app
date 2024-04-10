@@ -9,7 +9,6 @@ function App(): JSX.Element {
       <AppHeader />
       <InputBox />
       <Footer />
-
     </>
   );
 }

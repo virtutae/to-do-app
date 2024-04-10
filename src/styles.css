@@ -23,4 +23,6 @@ body {
 .input-bar {
   height: 35px;
 }
-#textBox{ z-index:1000; }
+#textBox {
+  z-index: 1000;
+}
