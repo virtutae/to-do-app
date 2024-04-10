@@ -1,5 +1,5 @@
 body {
-  background-color: #08b8cd;
+  background-color: #f47f44;
 }
 
 .title {
@@ -17,9 +17,10 @@ body {
 }
 
 .add-button:hover {
-  background-color: hsl(200, 70%, 50%);
+  background-color: hsl(71, 50%, 47%);
 }
 
 .input-bar {
   height: 35px;
 }
+#textBox{ z-index:1000; }

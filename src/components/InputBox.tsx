@@ -12,7 +12,7 @@ export default function InputBox(): JSX.Element {
     const [entriesFromApi, setEntriesFromApi] = useState<ToDoList[]>([]);
 
     useEffect(() => {
-        function getEntries() {
+        function getListOfToDos() {
             axios
                 .get("https://todoapp-backend-2ubv.onrender.com/")
                 .then((response) => {
@@ -23,7 +23,7 @@ export default function InputBox(): JSX.Element {
                     console.log("this gets logged when .finally gets executed")
                 );
         }
-        getEntries();
+        getListOfToDos();
     }, [entriesFromApi]);
 
     useEffect(
@@ -36,18 +36,17 @@ export default function InputBox(): JSX.Element {
                     )
                     .then((response) => console.log(response))
                     .catch((error) => console.log(error))
-                    .finally(() => getUpdatedEntries());
+                    .finally(() => getUpdatedToDoList());
             }
 
             sendEntryToApi();
         },
-        // eslint-disable-next-line
         []
     );
 
-    function getUpdatedEntries() {
+    function getUpdatedToDoList() {
         axios
-            .get("https://paste-bin-si-tl.onrender.com/")
+            .get("https://todoapp-backend-2ubv.onrender.com/")
             .then((response) => setEntriesFromApi(response.data))
             .catch((error) => console.log(error));
     }
@@ -56,7 +55,7 @@ export default function InputBox(): JSX.Element {
         setCurrentText(event.target.value);
     };
 
-    const handleClick = () => {
+    const handleAddButton = () => {
         const newListItem: ToDoItem = {
             todo_id: Math.floor(Math.random() * 1000),
             description: currentText,
@@ -68,7 +67,9 @@ export default function InputBox(): JSX.Element {
     };
 
     function handleDelete(todoId: number) {
-        console.log("the item was deleted");
+        const newList = list.filter((item) => item.todo_id !== todoId);
+        setCurrentEntryToSend({ todo_id: todoId, description: "" });
+        setList(newList);
     }
 
     return (
@@ -80,8 +81,7 @@ export default function InputBox(): JSX.Element {
                 onChange={handleChange}
                 value={currentText}
             />
-
-            <button type="button" className="add-button" onClick={handleClick}>
+            <button type="button" className="add-button" onClick={handleAddButton}>
                 Add item
             </button>
             <ul>
